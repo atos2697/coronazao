@@ -24,7 +24,7 @@
   flex-direction: column;
   font-family: "Montserrat", sans-serif;
   height: 100vh;
-  margin: 25px 0 50px;
+  margin: 20px 0 50px;
 }
 
 .title-form {
@@ -34,14 +34,6 @@
 
 h2 {
   text-align: center;
-}
-
-p {
-  font-size: 14px;
-  font-weight: 100;
-  line-height: 20px;
-  letter-spacing: 0.5px;
-  margin: 20px 0 30px;
 }
 
 .alert {
@@ -96,17 +88,6 @@ button:focus {
 button.ghost {
   background-color: transparent;
   border-color: #ffffff;
-}
-
-form {
-  background-color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 0 50px;
-  height: 100%;
-  text-align: center;
 }
 
 .form-input {

@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { useAuth } from "./contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import "./signup.css";
+import styled from "@emotion/styled";
 
 export default function SignUp() {
   const nameRef = useRef();
@@ -95,7 +96,7 @@ export default function SignUp() {
                 </div>
               ) /*<Alert variant="danger">{error}</Alert>*/
             }
-            <form action="#" onSubmit={handleSubmit}>
+            <Form action="#" onSubmit={handleSubmit}>
               <h1 className="title-form">Crear una cuenta</h1>
               <span style={{ fontSize: "12px" }} className="mb-2 text-muted">
                 Por favor, ingresa tus datos para crear una cuenta
@@ -153,10 +154,10 @@ export default function SignUp() {
               <button class="button-prot" disabled={loading}>
                 Registrar
               </button>
-            </form>
+            </Form>
           </div>
           <div class="form-container sign-in-container">
-            <form action="#" onSubmit={handleLogin}>
+            <Form action="#" onSubmit={handleLogin}>
               <h1 className="title-form">Inicia sesión</h1>
 
               <span className="mb-4 text-muted" style={{ fontSize: "12px" }}>
@@ -183,13 +184,13 @@ export default function SignUp() {
                 Olvidaste tu contraseña?
               </Link>
               <button class="button-prot">Iniciar sesión</button>
-            </form>
+            </Form>
           </div>
           <div class="overlay-container">
             <div class="overlay">
               <div class="overlay-panel overlay-left">
                 <h1 className="title-form">Ya tienes una cuenta?</h1>
-                <p>Bienvenido! Haz click debajo para iniciar sesión</p>
+                <Par>Bienvenido! Haz click debajo para iniciar sesión</Par>
                 <button
                   class="ghost button-prot"
                   id="signIn"
@@ -202,10 +203,10 @@ export default function SignUp() {
                 <h1 className="title-form">
                   No tienes una cuenta con nosotros?
                 </h1>
-                <p>
+                <Par>
                   Haz click en el botón de abajo para ingresar tus datos y crear
                   una cuenta!
-                </p>
+                </Par>
                 <button
                   class="ghost button-prot"
                   id="signUp"
@@ -223,3 +224,22 @@ export default function SignUp() {
     </div>
   );
 }
+
+const Par = styled.p`
+  font-size: 14px;
+  font-weight: 100;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  margin: 20px 0 30px;
+`;
+
+const Form = styled.form`
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 50px;
+  height: 100%;
+  text-align: center;
+`;
