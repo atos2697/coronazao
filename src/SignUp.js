@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useAuth } from "./contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import "./signup.css";
@@ -35,6 +35,10 @@ export default function SignUp() {
   function signinActive() {
     container.classList.remove("right-panel-active")
   }*/
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -73,7 +77,6 @@ export default function SignUp() {
   return (
     <div className="signup-body">
       <div class="vw-100" style={{ "font-family": "'Montserrat', sans-serif" }}>
-        <h2>Forma para crear una cuenta con nosotros</h2>
         <div
           class="container"
           id="container"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
@@ -38,6 +38,10 @@ export const Result = () => {
   const [mainfile, setMainfile] = useState([]);
   var imagesObj = {};
   var mainfileObj = {};
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const entries = Object.entries(data).filter((entry) => entry[0] !== "files");
   const entries2 = Object.entries(data).filter(
