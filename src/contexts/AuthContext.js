@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase";
+import firebase from "../firebase";
 
 const AuthContext = React.createContext();
 
@@ -10,10 +11,49 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
+  const db = firebase.database();
+  /*
+  async function signup(email, password) {
+    try {
+      return await auth.createUserWithEmailAndPassword(email, password)
+      
+    } catch (error) {
+      return this.setState({ result: error.message })
+    } // change this line to use a different database (firebase)
+    // create user in db here
+    
+  }*/
 
   function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password); // change this line to use a different database (firebase)
-    // create user in db here
+    /*auth.createUserWithEmailAndPassword(email, password).then((userCredential) => {
+      // Signed in 
+      var user = userCredential.user;
+      console.log(user)
+      // ...
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ..
+    });*/
+    // here we get user id if creating is successful.
+    /*.then(function (user) {
+        db.ref(`Global/users/${user.uid}`).set({ name: name }); // I added user
+        console.log('uid:', user.uid)
+
+      })*/
+    return auth.createUserWithEmailAndPassword(email, password);
+  }
+
+  function writeUserData(name, email, phone) {
+    firebase
+      .database()
+      .ref("Global/users/" + email)
+      .set({
+        username: name,
+        email: email,
+        phone: phone,
+      });
   }
 
   function login(email, password) {

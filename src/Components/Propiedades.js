@@ -328,34 +328,16 @@ function Propiedades() {
 
   return (
     <div>
-      <h1
-        style={{
-          marginTop: "80px",
-          textAlign: "center",
-          marginBottom: "30px",
-          width: "100%",
-          fontFamily: "Lato",
-        }}
-      >
-        PROPIEDADES
-      </h1>
+      <Header>PROPIEDADES</Header>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
-        <h2
-          style={{
-            fontSize: "40px",
-            position: "absolute",
-            top: "11%",
-            right: "6%",
-            cursor: "pointer",
-          }}
-        >
+        <Filter>
           <IoOptionsOutline
             style={{ width: "100%", fontSize: "60px" }}
             onClick={() => {
               handleToggle();
             }}
           />
-        </h2>
+        </Filter>
         <div
           style={{
             margin: "0 auto",
@@ -405,6 +387,36 @@ const Butt = styled.button`
   }
   &:hover::before {
     height: 180%;
+  }
+`;
+
+const Filter = styled.h2`
+  font-size: 40px;
+  position: absolute;
+  top: 11%;
+  right: 6%;
+  cursor: pointer;
+  @media (max-width: 900px) {
+    right: 8%;
+    top: 8%;
+  }
+  @media (max-width: 350px) {
+    right: 8%;
+    top: 8%;
+  }
+`;
+
+const Header = styled.h1`
+  margin-top: 80px;
+  text-align: center;
+  margin-bottom: 30px;
+  width: 100%;
+  font-family: "Lato";
+  @media (max-width: 900px) {
+    margin-top: 105px;
+  }
+  @media (max-width: 350px) {
+    margin-top: 105px;
   }
 `;
 

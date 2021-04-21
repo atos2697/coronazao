@@ -4,7 +4,7 @@
 }
 
 .slider {
-  height: 250px;
+  height: 300px;
   margin: auto;
   position: relative;
   width: 90%;
@@ -50,4 +50,24 @@
 
 .img:hover {
   transform: translateZ(20px);
+}
+
+@media screen and (max-width: 600px) {
+  .slide {
+    height: 200px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    perspective: 100px;
+  }
+  .slider {
+    height: 220px;
+    margin: auto;
+    position: relative;
+    width: 90%;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
 }

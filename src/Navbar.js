@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaInstagram } from "react-icons/fa";
-import { AiOutlineCloseCircle, AiFillHome } from "react-icons/ai";
+import {
+  AiOutlineCloseCircle,
+  AiFillHome,
+  AiOutlineContacts,
+} from "react-icons/ai";
 import { BiBuildingHouse, BiUserCircle } from "react-icons/bi";
 import "./navbar.css";
 import { IconContext } from "react-icons";
+import firebase from "./firebase";
+import { useAuth } from "./contexts/AuthContext";
 
 //npm install react-router-dom
 
 const Navbar = () => {
   const [sidebar, setSidebar] = useState(false);
-
-  const showSidebar = () => {
-    setSidebar(!sidebar);
-  };
-
-  const data = [
+  //const [data, setData] = useState([]);
+  const [data, setData] = useState([
     {
       title: "Inicio",
       path: "/",
@@ -28,31 +30,65 @@ const Navbar = () => {
       icon: <BiBuildingHouse />,
       className: "nav-text",
     },
+
     {
-      title: "Redes Sociales",
-      path: "/redes-sociales",
-      icon: <FaInstagram />,
-      className: "nav-text",
-    },
-    {
-      title: "Login",
-      path: "/signup",
+      title: "Perfil",
+      path: "/dashboard",
       icon: <BiUserCircle />,
       className: "nav-text",
     },
     {
-      title: "Add Property",
-      path: "/form/stepID",
-      icon: <BiUserCircle />,
+      title: "Contactanos",
+      path: "/contacto",
+      icon: <AiOutlineContacts />,
       className: "nav-text",
     },
     {
-      title: "Delete Property",
-      path: "/delete",
+      title: "Quienes somos",
+      path: "/about-us",
       icon: <BiUserCircle />,
       className: "nav-text",
     },
-  ];
+  ]);
+
+  const showSidebar = () => {
+    setSidebar(!sidebar);
+  };
+
+  const { currentUser } = useAuth();
+  const [admin, setAdmin] = useState();
+
+  useEffect(() => {
+    console.log(currentUser);
+
+    if (currentUser != null) {
+      const user = firebase.database().ref("Global/users/" + currentUser.uid);
+      user.on("value", (snapshot) => {
+        const data = snapshot.val();
+        setAdmin(data["admin"]);
+        console.log(data);
+      });
+    }
+
+    if (admin) {
+      console.log("fierro puto");
+      setData([
+        ...data,
+        {
+          title: "Add Property",
+          path: "/form/stepID",
+          icon: <BiUserCircle />,
+          className: "nav-text",
+        },
+        {
+          title: "Delete Property",
+          path: "/delete",
+          icon: <BiUserCircle />,
+          className: "nav-text",
+        },
+      ]);
+    }
+  }, [admin]);
 
   return (
     <IconContext.Provider value={{ color: "#fff" }}>

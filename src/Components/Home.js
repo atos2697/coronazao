@@ -2,6 +2,13 @@ import React from "react";
 import HomeSlider from "./HomeSlider";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+import {
+  AiFillFacebook,
+  AiOutlineInstagram,
+  AiOutlineWhatsApp,
+  AiOutlineMail,
+} from "react-icons/ai";
+import "./Home.css";
 
 const Home = () => {
   return (
@@ -39,6 +46,42 @@ const Home = () => {
       <Link to="/propiedades">
         <Butt>Ver propiedades</Butt>
       </Link>
+      <div style={{ marginTop: "15%" }} className="social-media3">
+        <div className="social-links-p">
+          <a
+            href="https://www.facebook.com/580462422107127/posts/1824685077684849/?d=n"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ marginRight: "25px" }}
+          >
+            <AiFillFacebook />
+          </a>
+          <a
+            href="https://www.instagram.com/p/CJLtb8kD5o_IBAo7Cl966_E-8OmwBecWMM-P6g0/?igshid=1tfw4nvhrhu7l"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ marginRight: "25px" }}
+          >
+            <AiOutlineInstagram />
+          </a>
+          <a
+            href="https://wa.me/529983857973"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ marginRight: "25px" }}
+          >
+            <AiOutlineWhatsApp />
+          </a>
+          <a
+            href="mailto:moreno.erika@yahoo.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ marginRight: "25px" }}
+          >
+            <AiOutlineMail />
+          </a>
+        </div>
+      </div>
     </div>
   );
 };

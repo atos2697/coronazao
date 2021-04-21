@@ -3,8 +3,13 @@ import { useAuth } from "./contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import "./signup.css";
 import styled from "@emotion/styled";
+import firebase, { auth } from "./firebase";
 
 export default function SignUp() {
+  const globalRef = firebase.database().ref().child("Global");
+  const db = firebase.database();
+  const populationRef = globalRef.child("users");
+  const { userData, setUserData } = useState("");
   const nameRef = useRef();
   const emailRef = useRef();
   const telRef = useRef();
@@ -12,7 +17,7 @@ export default function SignUp() {
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
   const passwordRefLogin = useRef();
-  const { signup, login } = useAuth();
+  const { signup, login, updateName } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -65,42 +70,63 @@ export default function SignUp() {
     try {
       setError("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
+      /*await signup(emailRef.current.value, passwordRef.current.value).then(
+
+        firebase.database().ref('Global/users/' + auth.).set({
+          username: nameRef.current.value,
+          email: emailRef.current.value,
+          phone: telRef.current.value
+        })
+      )*/
+
+      let name = nameRef.current.value;
+      let email = emailRef.current.value;
+      let phone = telRef.current.value;
+
+      await signup(email, passwordRef.current.value);
+
+      //await writeUserData(name, email, phone)
+
+      console.log("User id: " + auth.currentUser.uid);
+      writeUserData(name, email, phone);
+      //console.log("termino todo")
+
       history.push("/");
-    } catch {
+    } catch (er) {
       setError("Error al crear la cuenta");
+      console.log(er);
     }
 
     setLoading(false);
   }
 
+  function writeUserData(name, email, phone) {
+    //Promise
+    firebase
+      .database()
+      .ref("Global/users/" + auth.currentUser.uid)
+      .set({
+        name: name,
+        email: email,
+        phone: phone,
+      });
+    //updateName(name)
+  }
+
   return (
     <div className="signup-body">
-      <div class="vw-100" style={{ "font-family": "'Montserrat', sans-serif" }}>
-        <div
-          class="container"
-          id="container"
-          /*ref={container}*/ /*className={signupActive ? "right-panel-active": null}*/ className={
-            classContainer
-          }
-        >
-          <div class="form-container sign-up-container">
-            {
-              error && signupActive && (
-                <div class="alert">
-                  <span
-                    class="closebtn"
-                    onclick="this.parentElement.style.display='none';"
-                    style={{ fontSize: "12px" }}
-                  >
-                    &times;
-                  </span>
-                  <strong>Error!</strong> {error}
-                </div>
-              ) /*<Alert variant="danger">{error}</Alert>*/
-            }
+      <div style={{ fontFamily: "'Montserrat', sans-serif" }}>
+        <div class="container" id="container" className={classContainer}>
+          <div className="form-container sign-up-container">
+            {error && signupActive && (
+              <div className="alert">
+                <strong>Error!</strong> {error}
+              </div>
+            )}
             <Form action="#" onSubmit={handleSubmit}>
-              <h1 className="title-form">Crear una cuenta</h1>
+              <h1 className="title-form" style={{ width: "100%" }}>
+                Crear cuenta
+              </h1>
               <span style={{ fontSize: "12px" }} className="mb-2 text-muted">
                 Por favor, ingresa tus datos para crear una cuenta
               </span>
@@ -132,7 +158,6 @@ export default function SignUp() {
                 pattern="[0-9]{10}"
                 placeholder="Número de teléfono (Opcional)"
                 ref={telRef}
-                required
               />
               <span style={{ fontSize: "12px" }}> Contraseña</span>
               <input
@@ -154,12 +179,12 @@ export default function SignUp() {
                 ref={passwordConfirmRef}
                 required
               />
-              <button class="button-prot" disabled={loading}>
+              <button className="button-prot" disabled={loading}>
                 Registrar
               </button>
             </Form>
           </div>
-          <div class="form-container sign-in-container">
+          <div className="form-container sign-in-container">
             <Form action="#" onSubmit={handleLogin}>
               <h1 className="title-form">Inicia sesión</h1>
 
@@ -183,26 +208,26 @@ export default function SignUp() {
                 ref={passwordRefLogin}
                 required
               />
-              <Link class="aref" to="/forgot-password">
+              <Link className="aref" to="/forgot-password">
                 Olvidaste tu contraseña?
               </Link>
               <button class="button-prot">Iniciar sesión</button>
             </Form>
           </div>
-          <div class="overlay-container">
-            <div class="overlay">
-              <div class="overlay-panel overlay-left">
+          <div className="overlay-container">
+            <div className="overlay">
+              <div className="overlay-panel overlay-left">
                 <h1 className="title-form">Ya tienes una cuenta?</h1>
                 <Par>Bienvenido! Haz click debajo para iniciar sesión</Par>
                 <button
-                  class="ghost button-prot"
+                  className="ghost button-prot"
                   id="signIn"
-                  onClick={toggleForm} /*onClick={signinActive}*/
+                  onClick={toggleForm}
                 >
                   Iniciar sesión
                 </button>
               </div>
-              <div class="overlay-panel overlay-right">
+              <div className="overlay-panel overlay-right">
                 <h1 className="title-form">
                   No tienes una cuenta con nosotros?
                 </h1>
@@ -211,9 +236,9 @@ export default function SignUp() {
                   una cuenta!
                 </Par>
                 <button
-                  class="ghost button-prot"
+                  className="ghost button-prot"
                   id="signUp"
-                  onClick={toggleForm} /*onClick={signupActive}*/
+                  onClick={toggleForm}
                 >
                   Crear cuenta
                 </button>

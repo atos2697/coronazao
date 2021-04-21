@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,28 +13,22 @@ import Navbar from "./Navbar";
 import Propiedad from "./Components/Propiedad";
 import Form from "./Components/Form/FormEngine";
 import DeleteProperty from "./DeleteProperty";
-import Navbar2 from "./Navbar2";
-import { AuthProvider } from "./contexts/AuthContext";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "./Dashboard";
 import ForgotPassword from "./ForgotPassword";
 import SignUp from "./SignUp";
 import UpdateProfile from "./UpdateProfile";
+import Contacto from "./Contacto";
+import About from "./about";
 
 function App() {
-  const [auth, setAuth] = useState(true);
-
-  const Nav = () => {
-    if (auth === true) return <Navbar />;
-    else if (auth === false) return <Navbar2 />;
-  };
-
   return (
     <BrowserRouter>
       <div>
         <Router>
           <AuthProvider>
-            <Nav />
+            <Navbar />
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/propiedades" component={Propiedades} />
@@ -45,6 +39,8 @@ function App() {
               <PrivateRoute path="/update-profile" component={UpdateProfile} />
               <Route path="/forgot-password" component={ForgotPassword} />
               <Route path="/signup" component={SignUp} />
+              <Route path="/contacto" component={Contacto} />
+              <Route path="/about-us" component={About} />
               <Route component={NotFound} />
             </Switch>
           </AuthProvider>
